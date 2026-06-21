@@ -14,8 +14,8 @@ services:
       - dados-postgres:/var/lib/postgresql/data
     restart: always
     environment:
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "senha"
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: senha
     networks:
       - fcgpayment-net
 
@@ -27,7 +27,7 @@ services:
       - postgres
     environment:
       PGADMIN_DEFAULT_EMAIL: "email@email.com"
-      PGADMIN_DEFAULT_PASSWORD: "senha"
+      PGADMIN_DEFAULT_PASSWORD: senha
     restart: always
     networks:
       - fcgpayment-net
@@ -44,9 +44,9 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
       - rabbitmq_logs:/var/log/rabbitmq
     environment:
-      RABBITMQ_DEFAULT_USER: "user"
-      RABBITMQ_DEFAULT_PASS: "senha"
-      RABBITMQ_DEFAULT_VHOST: "my_vhost"
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: senha
+      RABBITMQ_DEFAULT_VHOST: my_vhost
 
   # fcgpayment:
   #   build:
