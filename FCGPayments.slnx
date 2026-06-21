@@ -5,6 +5,10 @@
     <Project Path="src/FCG.Payments.Infrastructure/FCG.Payments.Infrastructure.csproj" Id="d518a9b7-6bf7-4629-81bc-cc4fd54e0128" />
     <Project Path="src/FCG.Payments/FCG.Payments.csproj" />
   </Folder>
+  <Folder Name="/Itens de Solução/">
+    <File Path="docker-compose.yml" />
+    <File Path="Dockerfile" />
+  </Folder>
   <Folder Name="/k8s/">
   </Folder>
   <Folder Name="/tests/">
