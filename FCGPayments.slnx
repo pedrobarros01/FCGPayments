@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FCG.Payments/FCG.Payments.csproj" />
+  </Folder>
+  <Folder Name="/k8s/">
+  </Folder>
+  <Folder Name="/tests/">
+  </Folder>
+</Solution>
