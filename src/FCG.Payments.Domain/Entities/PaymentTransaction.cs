@@ -18,14 +18,7 @@ namespace FCG.Payments.Domain.Entities
             
         }
 
-        public PaymentTransaction(Guid userId, Guid gameId, decimal price)
-        {
-            base.CreateBaseEntity();
-            UserId = userId;
-            GameId = gameId;
-            Price = price;
-            DateTransaction = DateTime.Now;
-        }
+        
 
         public Guid GetRandomTransactionStatus()
         {
@@ -41,9 +34,13 @@ namespace FCG.Payments.Domain.Entities
             }
         }
 
-        public void Create()
+        public void Create(PaymentTransaction paymentTransaction)
         {
-            throw new NotImplementedException();
+            base.CreateBaseEntity();
+            UserId = paymentTransaction.UserId;
+            GameId = paymentTransaction.GameId;
+            Price = paymentTransaction.Price;
+            DateTransaction = DateTime.Now;
         }
     }
 }
