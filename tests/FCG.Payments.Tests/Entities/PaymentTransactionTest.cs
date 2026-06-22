@@ -26,4 +26,13 @@ public class PaymentTransactionTest
         Assert.Contains(statusId, statusIds);
         
     }
+
+    [Fact]
+    public void PaymentTransaction_Should_CreateObject()
+    {
+        var transaction = _transactionFixture.GenerateTransactionEmpty();
+        transaction.Create();
+        Assert.NotEqual(Guid.Empty, transaction.Id);
+
+    }
 }

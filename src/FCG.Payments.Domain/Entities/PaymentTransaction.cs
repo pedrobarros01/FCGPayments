@@ -40,5 +40,10 @@ namespace FCG.Payments.Domain.Entities
                 return StatusOptions.Reproved;
             }
         }
+
+        public void Create()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

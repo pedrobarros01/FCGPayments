@@ -13,6 +13,11 @@ public class PaymentTransactionBuilder
         var paymentTransaction = Build();
         return paymentTransaction;
     }
+    public PaymentTransaction GenerateTransactionEmpty()
+    {
+        var paymentTransaction = new PaymentTransaction();
+        return paymentTransaction;
+    }
 
     private PaymentTransaction Build()
     {
