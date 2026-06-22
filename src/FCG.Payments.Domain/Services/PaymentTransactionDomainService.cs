@@ -13,16 +13,17 @@ public class PaymentTransactionDomainService : IPaymentTransactionDomainService
 
     private readonly IPaymentTransactionRepository _paymentTransactionRepository;
     private readonly IPaymentTransactionStatusRepository _paymentTransactionStatusRepository;
-
-    public PaymentTransactionDomainService(IPaymentTransactionRepository paymentTransactionRepository, IPaymentTransactionStatusRepository paymentTransactionStatusRepository)
+    private readonly ISelectorStatus _selectorStatus;
+    public PaymentTransactionDomainService(IPaymentTransactionRepository paymentTransactionRepository, IPaymentTransactionStatusRepository paymentTransactionStatusRepository, ISelectorStatus selectorStatus)
     {
         _paymentTransactionRepository = paymentTransactionRepository;
         _paymentTransactionStatusRepository = paymentTransactionStatusRepository;
+        _selectorStatus = selectorStatus;
     }
 
     public async Task<PaymentTransaction> CreatePaymentTransaction(PaymentTransaction transaction)
     {
-        Guid statusRandomId = transaction.GetRandomTransactionStatus();
+        Guid statusRandomId = await _selectorStatus.GetRandomTransactionStatus();
         PaymentTransactionStatus? statusTransaction = await _paymentTransactionStatusRepository.GetById(statusRandomId);
         if (statusTransaction == null) throw new BusinessException("Status da transação não encontrado");
         transaction.Create(transaction, statusTransaction);
