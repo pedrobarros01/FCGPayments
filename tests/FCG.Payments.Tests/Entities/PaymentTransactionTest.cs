@@ -1,7 +1,10 @@
 ﻿
+using CommonTestUtilities.Database;
 using CommonTestUtilities.Entities;
 using FCG.Payments.Domain.Entities;
 using FCG.Payments.Domain.Enums;
+using FCG.Payments.Infrastructure.Repositories;
+using FCG.Payments.Infrastructure.Services;
 using FCG.Payments.Tests.Fixture;
 using System;
 using System.Collections.Generic;
@@ -18,11 +21,13 @@ public class PaymentTransactionTest
         _transactionFixture = transactionFixture;
     }
     [Fact]
-    public void PaymentTransaction_Should_CreateRandomStatusTransaction()
+    public async Task PaymentTransaction_Should_CreateRandomStatusTransaction()
     {
         var transaction = _transactionFixture.GenerateTransactionWithStatusEmpty();
-
-        Guid statusId = transaction.GetRandomTransactionStatus();
+        var context = await ContextBuilder.GenerateContext();
+        var paymentTransactionStatusRepository = new PaymentTransactionStatusRepository(context);
+        var selectorStatusService = new SelectorStatus(paymentTransactionStatusRepository);
+        var statusId = await selectorStatusService.GetRandomTransactionStatus();
         List<Guid> statusIds = new List<Guid> { StatusOptions.Approved, StatusOptions.Reproved};
         Assert.Contains(statusId, statusIds);
         
