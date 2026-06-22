@@ -11,6 +11,7 @@ namespace FCG.Payments.Domain.Entities
         public Guid GameId { get; set; }
         public decimal Price { get; set; }
         public DateTime DateTransaction { get; set; }
+        public Guid StatusTransactionId { get; set; }
         public PaymentTransactionStatus StatusTransaction { get; set; }
 
         public PaymentTransaction()
@@ -26,8 +27,9 @@ namespace FCG.Payments.Domain.Entities
             UserId = paymentTransaction.UserId;
             GameId = paymentTransaction.GameId;
             Price = paymentTransaction.Price;
-            StatusTransaction = statusTransaction;
+            StatusTransactionId = statusTransaction.Id;
             DateTransaction = DateTime.Now;
+            //StatusTransaction.AddTransaction(this);
         }
     }
 }

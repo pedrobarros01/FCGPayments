@@ -1,6 +1,7 @@
 ﻿using FCG.Payments.Domain.Entities;
 using FCG.Payments.Domain.Interfaces.Repositories;
 using FCG.Payments.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
