@@ -7,6 +7,6 @@ namespace FCG.Payments.Domain.Interfaces.Repositories
 {
     public interface IPaymentTransactionStatusRepository
     {
-        Task<PaymentTransactionStatus> GetById(Guid id);
+        Task<PaymentTransactionStatus?> GetById(Guid id);
     }
 }

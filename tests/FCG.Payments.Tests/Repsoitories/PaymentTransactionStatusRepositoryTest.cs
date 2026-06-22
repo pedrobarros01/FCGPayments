@@ -35,7 +35,7 @@ public class PaymentTransactionStatusRepositoryTest
         var repository = new PaymentTransactionStatusRepository(context);
 
         // Act
-        var result = await repository.GetById(status.Id);
+        var result = await repository.GetById(StatusOptions.Approved);
 
         // Assert
         Assert.NotNull(result);
