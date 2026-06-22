@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FCG.Payments.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -26,9 +27,18 @@ namespace FCG.Payments.Domain.Entities
             DateTransaction = DateTime.Now;
         }
 
-        public void CreateTransactionStatus()
+        public Guid GetRandomTransactionStatus()
         {
-            throw new NotImplementedException();
+            Random random = new Random();
+            int sortedNumber = random.Next(0, 10);
+            if(sortedNumber <= 4)
+            {
+                return  StatusOptions.Approved;
+            }
+            else
+            {
+                return StatusOptions.Reproved;
+            }
         }
     }
 }

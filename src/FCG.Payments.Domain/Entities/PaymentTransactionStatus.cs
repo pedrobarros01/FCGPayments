@@ -13,6 +13,10 @@ namespace FCG.Payments.Domain.Entities
         {
             
         }
+        public PaymentTransactionStatus(Guid id)
+        {
+            Id = id;
+        }
         public PaymentTransactionStatus(string name, string code)
         {
             

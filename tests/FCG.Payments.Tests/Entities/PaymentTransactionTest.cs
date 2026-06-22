@@ -21,9 +21,9 @@ public class PaymentTransactionTest
     {
         var transaction = _transactionFixture.GenerateTransactionWithStatusEmpty();
 
-        transaction.CreateTransactionStatus();
+        Guid statusId = transaction.GetRandomTransactionStatus();
         List<Guid> statusIds = new List<Guid> { StatusOptions.Approved, StatusOptions.Reproved};
-        Assert.All(statusIds, s => Assert.Equal(s, transaction.StatusTransaction.Id));
+        Assert.Contains(statusId, statusIds);
         
     }
 }
