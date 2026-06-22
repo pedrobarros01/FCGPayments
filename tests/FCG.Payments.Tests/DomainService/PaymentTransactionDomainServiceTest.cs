@@ -1,8 +1,12 @@
-﻿using CommonTestUtilities.Entities;
+﻿using CommonTestUtilities.Database;
+using CommonTestUtilities.Entities;
 using FCG.Payments.Domain.Entities;
 using FCG.Payments.Domain.Enums;
+using FCG.Payments.Domain.Interfaces;
 using FCG.Payments.Domain.Interfaces.Repositories;
 using FCG.Payments.Domain.Services;
+using FCG.Payments.Infrastructure.Repositories;
+using FCG.Payments.Infrastructure.Services;
 using FCG.Payments.Tests.Fixture;
 using Moq;
 using System;
@@ -30,15 +34,36 @@ public class PaymentTransactionDomainServiceTest
         );
         var paymentRepository = new Mock<IPaymentTransactionRepository>();
         var statusRepository = new Mock<IPaymentTransactionStatusRepository>();
+        var selectorStatusService = new Mock<ISelectorStatus>();
+        
         statusRepository
             .Setup(x => x.GetById(StatusOptions.Approved))
             .ReturnsAsync(status);
+
+        statusRepository
+            .Setup(x => x.GetAll())
+            .ReturnsAsync([
+            new PaymentTransactionStatus(
+            Guid.Parse("11111111-1111-1111-1111-111111111111"),
+            "Aprovado",
+            "Pagamento aprovado"
+            ),
+            new PaymentTransactionStatus(
+            Guid.Parse("22222222-2222-2222-2222-222222222222"),
+            "Reprovado",
+            "Pagamento reprovado"
+            )
+        ]);
+
+        selectorStatusService
+            .Setup(x => x.GetRandomTransactionStatus())
+            .ReturnsAsync(StatusOptions.Approved);
 
         paymentRepository
             .Setup(x => x.Insert(It.IsAny<PaymentTransaction>()))
             .ReturnsAsync((PaymentTransaction p) => p);
         var paymentTransactionDomainService = new PaymentTransactionDomainService(paymentRepository.Object,
-            statusRepository.Object);
+            statusRepository.Object, selectorStatusService.Object);
         var paymentTransaction = await paymentTransactionDomainService.CreatePaymentTransaction(paymentTransactionMock);
         List<Guid> statusIds = new List<Guid> { StatusOptions.Approved, StatusOptions.Reproved };
         Assert.NotNull(paymentTransaction);

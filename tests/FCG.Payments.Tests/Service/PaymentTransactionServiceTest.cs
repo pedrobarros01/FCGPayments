@@ -3,9 +3,11 @@ using FCG.Payments.Application.DTO;
 using FCG.Payments.Application.Services;
 using FCG.Payments.Domain.Entities;
 using FCG.Payments.Domain.Enums;
+using FCG.Payments.Domain.Interfaces.Repositories;
 using FCG.Payments.Domain.Services;
 using FCG.Payments.Infrastructure.Persistence;
 using FCG.Payments.Infrastructure.Repositories;
+using FCG.Payments.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,7 +25,8 @@ public class PaymentTransactionServiceTest
 
         var repositoryPaymentTransactionStatus = new PaymentTransactionStatusRepository(context);
         var repositoryPaymentTransaction = new PaymentTransactionRepository(context);
-        var domainService = new PaymentTransactionDomainService(repositoryPaymentTransaction, repositoryPaymentTransactionStatus);
+        var selectorStatusService = new SelectorStatus(repositoryPaymentTransactionStatus);
+        var domainService = new PaymentTransactionDomainService(repositoryPaymentTransaction, repositoryPaymentTransactionStatus, selectorStatusService);
         var unitOfWork = new UnitOfWork(context);
         var service = new PaymentTransactionService(unitOfWork, domainService);
         Random random = new Random();
