@@ -12,5 +12,7 @@
   <Folder Name="/k8s/">
   </Folder>
   <Folder Name="/tests/">
+	<Project Path="tests/FCG.Payments.Tests/FCG.Payments.Tests.csproj" />
+<Project Path="tests/CommonTestUtilities/CommonTestUtilities.csproj" />
   </Folder>
 </Solution>

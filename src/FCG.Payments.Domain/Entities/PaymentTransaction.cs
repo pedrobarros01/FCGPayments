@@ -17,14 +17,18 @@ namespace FCG.Payments.Domain.Entities
             
         }
 
-        public PaymentTransaction(Guid userId, Guid gameId, decimal price, PaymentTransactionStatus statusTransaction)
+        public PaymentTransaction(Guid userId, Guid gameId, decimal price)
         {
             base.CreateBaseEntity();
             UserId = userId;
             GameId = gameId;
             Price = price;
-            StatusTransaction = statusTransaction;
             DateTransaction = DateTime.Now;
+        }
+
+        public void CreateTransactionStatus()
+        {
+            throw new NotImplementedException();
         }
     }
 }
