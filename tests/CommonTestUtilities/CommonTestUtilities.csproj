@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="35.6.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.9" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\FCG.Payments.Domain\FCG.Payments.Domain.csproj" />
+    <ProjectReference Include="..\..\src\FCG.Payments.Infrastructure\FCG.Payments.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
