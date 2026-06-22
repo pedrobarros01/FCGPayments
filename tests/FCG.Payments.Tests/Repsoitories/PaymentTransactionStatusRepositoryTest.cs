@@ -1,4 +1,5 @@
-﻿using FCG.Payments.Domain.Entities;
+﻿using CommonTestUtilities.Database;
+using FCG.Payments.Domain.Entities;
 using FCG.Payments.Domain.Enums;
 using FCG.Payments.Domain.Interfaces.Repositories;
 using FCG.Payments.Domain.Services;
@@ -14,23 +15,10 @@ namespace FCG.Payments.Tests.Repsoitories;
 public class PaymentTransactionStatusRepositoryTest
 {
     [Fact]
-    public async Task PaymentTransactionRepsoitory_Should_GetByIdOneStatus()
+    public async Task PaymentTransactionStatusRepsoitory_Should_GetByIdOneStatus()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
-
-        await using var context = new ApplicationDbContext(options);
-
-        var status = new PaymentTransactionStatus(
-            Guid.Parse("11111111-1111-1111-1111-111111111111"),
-            "Aprovado",
-            "Pagamento aprovado"
-        );
-
-        context.PaymentTransactionStatus.Add(status);
-        await context.SaveChangesAsync();
+        var context = await ContextBuilder.GenerateContext();
 
         var repository = new PaymentTransactionStatusRepository(context);
 
@@ -41,5 +29,19 @@ public class PaymentTransactionStatusRepositoryTest
         Assert.NotNull(result);
         Assert.IsType<PaymentTransactionStatus>(result);
         Assert.Equal(StatusOptions.Approved, result.Id);
+    }
+    [Fact]
+    public async Task PaymentTransactionStatusRepsoitory_Should_GetAll()
+    {
+        // Arrange
+        var context = await ContextBuilder.GenerateContext();
+
+        var repository = new PaymentTransactionStatusRepository(context);
+
+        // Act
+        var result = await repository.GetAll();
+
+        // Assert
+        Assert.True(result.Count > 0);
     }
 }
