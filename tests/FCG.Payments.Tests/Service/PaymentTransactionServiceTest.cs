@@ -20,7 +20,7 @@ public class PaymentTransactionServiceTest
     public async Task PaymentTransactionService_Should_CreateTransactio()
     {
         // Arrange
-        var context = await ContextBuilder.GenerateContext();
+        await using var context = await ContextBuilder.GenerateContext();
 
 
         var repositoryPaymentTransactionStatus = new PaymentTransactionStatusRepository(context);
@@ -43,6 +43,6 @@ public class PaymentTransactionServiceTest
         // Assert
         Assert.NotNull(result);
         Assert.IsType<PaymentTransaction>(result);
-        Assert.NotNull(result.StatusTransaction);
+        Assert.True(result.StatusTransactionId != Guid.Empty);
     }
 }

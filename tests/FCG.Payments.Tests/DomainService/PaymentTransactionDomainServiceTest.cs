@@ -67,6 +67,6 @@ public class PaymentTransactionDomainServiceTest
         var paymentTransaction = await paymentTransactionDomainService.CreatePaymentTransaction(paymentTransactionMock);
         List<Guid> statusIds = new List<Guid> { StatusOptions.Approved, StatusOptions.Reproved };
         Assert.NotNull(paymentTransaction);
-        Assert.Contains(paymentTransaction.StatusTransaction.Id, statusIds);
+        Assert.Contains(paymentTransaction.StatusTransactionId, statusIds);
     }
 }

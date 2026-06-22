@@ -29,6 +29,7 @@ public static class ContextBuilder
             )
         ]);
         await context.SaveChangesAsync();
+        context.ChangeTracker.Clear();
         return context;
     }
 }
