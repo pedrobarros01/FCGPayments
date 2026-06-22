@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FCG.Payments.Domain.Interfaces.Repositories
 {
-    public interface IPaymentTransactionStatusRepository
+    public interface IPaymentTransactionStatusRepository : IBaseRepository<PaymentTransactionStatus>
     {
         Task<PaymentTransactionStatus?> GetById(Guid id);
     }

@@ -1,5 +1,6 @@
 ﻿
 using CommonTestUtilities.Entities;
+using FCG.Payments.Domain.Entities;
 using FCG.Payments.Domain.Enums;
 using FCG.Payments.Tests.Fixture;
 using System;
@@ -31,7 +32,8 @@ public class PaymentTransactionTest
     public void PaymentTransaction_Should_CreateObject()
     {
         var transaction = _transactionFixture.GenerateTransactionEmpty();
-        transaction.Create(transaction);
+        var status = new PaymentTransactionStatus(Guid.NewGuid(), "teste", "teste");
+        transaction.Create(transaction, status);
         Assert.NotEqual(Guid.Empty, transaction.Id);
 
     }

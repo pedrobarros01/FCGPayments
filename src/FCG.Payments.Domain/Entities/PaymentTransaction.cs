@@ -34,12 +34,13 @@ namespace FCG.Payments.Domain.Entities
             }
         }
 
-        public void Create(PaymentTransaction paymentTransaction)
+        public void Create(PaymentTransaction paymentTransaction, PaymentTransactionStatus statusTransaction)
         {
             base.CreateBaseEntity();
             UserId = paymentTransaction.UserId;
             GameId = paymentTransaction.GameId;
             Price = paymentTransaction.Price;
+            StatusTransaction = statusTransaction;
             DateTransaction = DateTime.Now;
         }
     }
