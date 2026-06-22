@@ -15,8 +15,8 @@ public class PaymentTransactionStatusMap : IEntityTypeConfiguration<PaymentTrans
         builder.ToTable("PaymentTransactionStatus");
         builder.HasKey(x => x.Id);
         builder.HasData(
-            new PaymentTransactionStatus(StatusOptions.Approved,"Aprovado", "APPROVED", "Referente a status de pagamento ser aprovado"),
-            new PaymentTransactionStatus(StatusOptions.Reproved, "Reprovado", "REPROVED", "Referente a status de pagamento ser reprovado")
+            new PaymentTransactionStatus(StatusOptions.Approved,"Aprovado", "Referente a status de pagamento ser aprovado"),
+            new PaymentTransactionStatus(StatusOptions.Reproved, "Reprovado", "Referente a status de pagamento ser reprovado")
         );
     }
 }

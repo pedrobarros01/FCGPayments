@@ -17,13 +17,13 @@ namespace FCG.Payments.Domain.Entities
         {
             Id = id;
         }
-        public PaymentTransactionStatus(string name, string code)
+        public PaymentTransactionStatus(string name)
         {
             
             Name = name;
             Description = null;
         }
-        public PaymentTransactionStatus(Guid id, string name, string code, string description) : this(name, code)
+        public PaymentTransactionStatus(Guid id, string name, string description) : this(name)
         {
             Id = id;
             Description = description;
