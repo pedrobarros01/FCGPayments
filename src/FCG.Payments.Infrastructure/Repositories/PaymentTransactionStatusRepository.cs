@@ -10,6 +10,12 @@ namespace FCG.Payments.Infrastructure.Repositories;
 
 public class PaymentTransactionStatusRepository(ApplicationDbContext context) : BaseRepository<PaymentTransactionStatus>(context), IPaymentTransactionStatusRepository
 {
+    public async Task<IList<PaymentTransactionStatus>> GetAll()
+    {
+        return await BaseQuery()
+            .ToListAsync();
+    }
+
     public async Task<PaymentTransactionStatus?> GetById(Guid id)
     {
         return await BaseQuery()

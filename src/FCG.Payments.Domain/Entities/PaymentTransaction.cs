@@ -20,20 +20,6 @@ namespace FCG.Payments.Domain.Entities
 
         
 
-        public Guid GetRandomTransactionStatus()
-        {
-            Random random = new Random();
-            int sortedNumber = random.Next(0, 10);
-            if(sortedNumber <= 4)
-            {
-                return  StatusOptions.Approved;
-            }
-            else
-            {
-                return StatusOptions.Reproved;
-            }
-        }
-
         public void Create(PaymentTransaction paymentTransaction, PaymentTransactionStatus statusTransaction)
         {
             base.CreateBaseEntity();
