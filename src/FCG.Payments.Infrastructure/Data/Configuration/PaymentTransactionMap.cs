@@ -15,7 +15,8 @@ namespace FCG.Payments.Infrastructure.Data.Configuration
             builder.HasKey(x => x.Id);
 
             builder.HasOne(p => p.StatusTransaction)
-                .WithMany(ps => ps.Transactions);
+                .WithMany(ps => ps.Transactions)
+                .HasForeignKey(p => p.StatusTransactionId);
         }
     }
 }
