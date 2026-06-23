@@ -21,11 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\FCG.Payments.Shared\FCG.Payments.Shared.csproj" />
+    <ProjectReference Include="..\..\FCG.Payments.Shared\FCG.Shared.csproj" />
     <ProjectReference Include="..\..\src\CommonTestUtilities\CommonTestUtilities.csproj" />
     <ProjectReference Include="..\..\src\FCG.Payments.Application\FCG.Payments.Application.csproj" />
     <ProjectReference Include="..\..\src\FCG.Payments.Domain\FCG.Payments.Domain.csproj" />
     <ProjectReference Include="..\..\src\FCG.Payments.Infrastructure\FCG.Payments.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\FCG.Payments\FCG.Payments.csproj" />
     <ProjectReference Include="..\CommonTestUtilities\CommonTestUtilities.csproj" />
   </ItemGroup>
 
