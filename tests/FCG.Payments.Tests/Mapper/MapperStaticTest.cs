@@ -4,7 +4,7 @@ using FCG.Payments.Application.Mapper;
 using FCG.Payments.Domain.Entities;
 using FCG.Payments.Domain.Enums;
 using FCG.Payments.Infrastructure.Repositories;
-using FCG.Payments.Shared.Events;
+using FCG.Shared.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;

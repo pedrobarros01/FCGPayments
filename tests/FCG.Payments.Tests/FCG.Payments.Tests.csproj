@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\src\FCG.Payments.Domain\FCG.Payments.Domain.csproj" />
     <ProjectReference Include="..\..\src\FCG.Payments.Infrastructure\FCG.Payments.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\FCG.Payments\FCG.Payments.csproj" />
+    <ProjectReference Include="..\..\src\FCG.Shared\FCG.Shared.csproj" />
     <ProjectReference Include="..\CommonTestUtilities\CommonTestUtilities.csproj" />
   </ItemGroup>
 
