@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="..\..\..\..\..\source\repos\FCGPayments\src\FCG.Payments\appsettings.json" Link="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MassTransit" Version="8.3.6" />
     <PackageReference Include="MassTransit.Abstractions" Version="8.3.6" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.6" />
@@ -21,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FCG.Payments.Infrastructure\FCG.Payments.Infrastructure.csproj" />
 	<ProjectReference Include="..\FCG.Payments.Application\FCG.Payments.Application.csproj" />
+	<ProjectReference Include="..\FCG.Payments.Logger\FCG.Payments.Logger.csproj" />
   </ItemGroup>
 
 </Project>

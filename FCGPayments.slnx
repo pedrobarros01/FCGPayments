@@ -3,7 +3,9 @@
     <Project Path="src/FCG.Payments.Application/FCG.Payments.Application.csproj" Id="74c7113c-5479-4cce-86ee-2f33a3955813" />
     <Project Path="src/FCG.Payments.Domain/FCG.Payments.Domain.csproj" Id="fa15a2a8-48b4-4d73-9bb3-9a9da4b513ec" />
     <Project Path="src/FCG.Payments.Infrastructure/FCG.Payments.Infrastructure.csproj" Id="d518a9b7-6bf7-4629-81bc-cc4fd54e0128" />
+    <Project Path="src/FCG.Payments.Logger/FCG.Payments.Logger.csproj" Id="185dac7c-ba1a-44b3-a345-8af5a8afb23e" />
     <Project Path="src/FCG.Payments/FCG.Payments.csproj" />
+    <Project Path="src/FCG.Shared/FCG.Shared.csproj" Id="7878ec64-1d0c-4a51-9f97-81c2016fdfd6" />
   </Folder>
   <Folder Name="/Itens de Solução/">
     <File Path="docker-compose.yml" />
@@ -12,5 +14,7 @@
   <Folder Name="/k8s/">
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/CommonTestUtilities/CommonTestUtilities.csproj" />
+    <Project Path="tests/FCG.Payments.Tests/FCG.Payments.Tests.csproj" />
   </Folder>
 </Solution>

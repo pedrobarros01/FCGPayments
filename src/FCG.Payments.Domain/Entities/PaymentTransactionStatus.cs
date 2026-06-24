@@ -8,21 +8,29 @@ namespace FCG.Payments.Domain.Entities
     {
         public string Name { get; set; }
         public string? Description { get; set; }
-        public ICollection<PaymentTransaction> Transactions { get; set; }
+        public ICollection<PaymentTransaction> Transactions { get; set; } = [];
         public PaymentTransactionStatus()
         {
-            
+
         }
-        public PaymentTransactionStatus(string name, string code)
+        public PaymentTransactionStatus(Guid id)
         {
-            
+            Id = id;
+        }
+        public PaymentTransactionStatus(string name)
+        {
+
             Name = name;
             Description = null;
         }
-        public PaymentTransactionStatus(Guid id, string name, string code, string description) : this(name, code)
+        public PaymentTransactionStatus(Guid id, string name, string description) : this(name)
         {
             Id = id;
             Description = description;
+        }
+        public void AddTransaction(PaymentTransaction transaction)
+        {
+            Transactions.Add(transaction);
         }
     }
 }
