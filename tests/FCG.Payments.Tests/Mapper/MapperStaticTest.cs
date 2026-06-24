@@ -27,5 +27,47 @@ namespace FCG.Payments.Tests.Mapper
             Assert.Equal(@event.GameId, mappedObject.GameId);
             Assert.Equal(@event.Price, mappedObject.Price);
         }
+        [Fact]
+        public async Task MapperStatic_Should_MapPaymentTransactionToPaymentProcessedApprovedEvent()
+        {
+            //Arrange
+            Random random = new Random();
+            var @event = new PaymentTransaction
+            {
+                DateTransaction = DateTime.Now,
+                GameId = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
+                Price = (decimal)random.NextDouble(),
+                StatusTransactionId = StatusOptions.Approved,
+                UserId = Guid.NewGuid()
+            };
+            PaymentProcessedEvent mappedObject = MapperStatic.MapPaymentTransactionToPaymentProcessedEvent(@event);
+
+            Assert.NotNull(mappedObject);
+            Assert.Equal(@event.UserId, mappedObject.UserId);
+            Assert.Equal(@event.GameId, mappedObject.GameId);
+            Assert.Equal("APPROVED", mappedObject.StatusTransaction);
+        }
+        [Fact]
+        public async Task MapperStatic_Should_MapPaymentTransactionToPaymentProcessedReprovedEvent()
+        {
+            //Arrange
+            Random random = new Random();
+            var @event = new PaymentTransaction
+            {
+                DateTransaction = DateTime.Now,
+                GameId = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
+                Price = (decimal)random.NextDouble(),
+                StatusTransactionId = StatusOptions.Reproved,
+                UserId = Guid.NewGuid()
+            };
+            PaymentProcessedEvent mappedObject = MapperStatic.MapPaymentTransactionToPaymentProcessedEvent(@event);
+
+            Assert.NotNull(mappedObject);
+            Assert.Equal(@event.UserId, mappedObject.UserId);
+            Assert.Equal(@event.GameId, mappedObject.GameId);
+            Assert.Equal("REPROVED", mappedObject.StatusTransaction);
+        }
     }
 }
