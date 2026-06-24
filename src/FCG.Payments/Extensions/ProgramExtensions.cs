@@ -1,21 +1,31 @@
 ﻿using FCG.Payments.Application.DTO;
 using FCG.Payments.Application.Interfaces;
 using FCG.Payments.Application.Services;
+using FCG.Payments.Domain.Entities;
 using FCG.Payments.Domain.Interfaces;
 using FCG.Payments.Domain.Interfaces.Repositories;
 using FCG.Payments.Domain.Services;
 using FCG.Payments.Infrastructure.Data;
 using FCG.Payments.Infrastructure.Messaging.Consumer;
+using FCG.Payments.Infrastructure.Messaging.Producer;
 using FCG.Payments.Infrastructure.Persistence;
 using FCG.Payments.Infrastructure.Queue;
+using FCG.Payments.Infrastructure.Repositories;
+using FCG.Payments.Infrastructure.Services;
 using FCG.Payments.Infrastructure.Settings;
+using FCG.Payments.Logger;
+
+//using FCG.Payments.Logger;
+using FCG.Shared.Events;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Channels;
 
 namespace FCG.Payments.Extensions
 {
@@ -25,6 +35,7 @@ namespace FCG.Payments.Extensions
         public static IServiceCollection ConfigureWorker(this IServiceCollection services)
         {
             services.AddHostedService<Worker>();
+            services.AddHostedService<LoggerWorker>();
 
             return services;
         }
@@ -36,7 +47,9 @@ namespace FCG.Payments.Extensions
         public static IServiceCollection ConfigureApplication(this IServiceCollection services)
         {
             services.AddSingleton<IProcessingQueue<TransactionCreate>, ProcessingQueue<TransactionCreate>>();
+
             services.AddScoped<IPaymentTransactionService, PaymentTransactionService>();
+            services.AddScoped<ISelectorStatus, SelectorStatus>();
             return services;
         }
         public static IServiceCollection ConfigureInfrastructure(this IServiceCollection services, IConfiguration configuration)
@@ -45,7 +58,7 @@ namespace FCG.Payments.Extensions
             if (rabbitMqSettings == null ||
             string.IsNullOrWhiteSpace(rabbitMqSettings.Host) ||
             string.IsNullOrWhiteSpace(rabbitMqSettings.Username) ||
-            string.IsNullOrWhiteSpace(rabbitMqSettings.Password) || 
+            string.IsNullOrWhiteSpace(rabbitMqSettings.Password) ||
             string.IsNullOrWhiteSpace(rabbitMqSettings.KeyQueueOrderPlaced))
             {
                 throw new InvalidOperationException("RabbitMQ não configurado, verifique as ENVs do projeto");
@@ -79,14 +92,20 @@ namespace FCG.Payments.Extensions
                             e.ConfigureConsumer<OrderPlacedConsumer>(context);
                         });
 
+                        cfg.Publish<PaymentProcessedEvent>(p => p.ExchangeType = "topic");
+                        cfg.ConfigureEndpoints(context);
 
                     });
-                }    
-                
+                }
+
             );
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            services.AddScoped<IPaymentProcessedPublisher, PaymentProcessedPublisher>();
+            services.AddScoped<IPaymentTransactionRepository, PaymentTransactionRepository>();
+            services.AddScoped<IPaymentTransactionStatusRepository, PaymentTransactionStatusRepository>();
+            services.AddSingleton(Channel.CreateUnbounded<Log>());
+            services.AddSingleton<ILoggerProvider, DatabaseLoggerProvider>();
             return services;
         }
     }
