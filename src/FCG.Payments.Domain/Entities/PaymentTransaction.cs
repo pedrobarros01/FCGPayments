@@ -29,7 +29,6 @@ namespace FCG.Payments.Domain.Entities
             Price = paymentTransaction.Price;
             StatusTransactionId = statusTransaction.Id;
             DateTransaction = DateTime.UtcNow;
-            //StatusTransaction.AddTransaction(this);
         }
     }
 }

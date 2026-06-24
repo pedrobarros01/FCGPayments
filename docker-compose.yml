@@ -14,8 +14,7 @@ services:
       - dados-postgres:/var/lib/postgresql/data
     restart: always
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: senha
+      POSTGRES_PASSWORD: mysecretpassword
     networks:
       - fcgpayment-net
 
@@ -48,16 +47,24 @@ services:
       RABBITMQ_DEFAULT_PASS: senha
       RABBITMQ_DEFAULT_VHOST: my_vhost
 
-  # fcgpayment:
-  #   build:
-  #     context: .
-  #   restart: always
-  #   depends_on:
-  #     - postgres
-  #     - rabbitmq  
-  #     - pgadmin
-  #   networks:
-  #     - fcgpayment-net
+  fcgpayment:
+    build:
+      context: .
+    restart: always
+    depends_on:
+      - postgres
+      - rabbitmq  
+      - pgadmin
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=fcgpayments-postgres-1;Port=5432;Database=postgres;Username=postgres;Password=mysecretpassword"
+      RabbitMQ__Host: fcgpayments-rabbitmq-1
+      RabbitMQ__VirtualHost: "my_vhost"
+      RabbitMQ__Username: user
+      RabbitMQ__Password: senha
+      RabbitMQ__KeyQueueOrderPlaced: "order-placed"
+      RabbitMQ__KeyPublisher: "payment.processed"
+    networks:
+      - fcgpayment-net
 
 
 
