@@ -12,10 +12,12 @@ namespace FCG.Payments.Application.Services;
 public class PaymentTransactionService : BaseApplicationService, IPaymentTransactionService
 {
     private readonly IPaymentTransactionDomainService _paymentTransactionDomainService;
+    private readonly IPaymentProcessedPublisher _paymentProcessedPublisher;
 
-    public PaymentTransactionService(IUnitOfWork unitOfWork, IPaymentTransactionDomainService paymentTransactionDomainService) : base(unitOfWork)
+    public PaymentTransactionService(IUnitOfWork unitOfWork, IPaymentTransactionDomainService paymentTransactionDomainService, IPaymentProcessedPublisher paymentProcessedPublisher) : base(unitOfWork)
     {
         _paymentTransactionDomainService = paymentTransactionDomainService ?? throw new ArgumentNullException(nameof(paymentTransactionDomainService));
+        _paymentProcessedPublisher = paymentProcessedPublisher;
     }
 
     public async Task<PaymentTransaction> ProcessPayment(TransactionCreate transaction)
@@ -28,7 +30,7 @@ public class PaymentTransactionService : BaseApplicationService, IPaymentTransac
         };
         var transactionInserted = await _paymentTransactionDomainService.CreatePaymentTransaction(paymentTransaction);
         await UnitOfWork.CommitAsync();
-        //Chamar função de publicar evento para notification e catalog
+        await _paymentProcessedPublisher.PublishPaymentProcessed(transactionInserted);
         return transactionInserted;
     }
 }

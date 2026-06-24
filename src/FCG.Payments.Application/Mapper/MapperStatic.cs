@@ -1,4 +1,6 @@
 ﻿using FCG.Payments.Application.DTO;
+using FCG.Payments.Domain.Entities;
+using FCG.Payments.Domain.Enums;
 using FCG.Shared.Events;
 using System;
 using System.Collections.Generic;
@@ -17,4 +19,15 @@ public static class MapperStatic
             GameId = @event.GameId,
         };
     }
+
+    public static PaymentProcessedEvent MapPaymentTransactionToPaymentProcessedEvent(PaymentTransaction paymentTransaction)
+    {
+        string statusTransaction = paymentTransaction.StatusTransactionId == StatusOptions.Approved ? "APPROVED" : "REPROVED";
+        return new PaymentProcessedEvent(
+            paymentTransaction.UserId,
+            paymentTransaction.GameId,
+            statusTransaction
+        );
+    }
+
 }
