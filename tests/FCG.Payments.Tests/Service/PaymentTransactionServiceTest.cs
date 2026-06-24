@@ -3,11 +3,13 @@ using FCG.Payments.Application.DTO;
 using FCG.Payments.Application.Services;
 using FCG.Payments.Domain.Entities;
 using FCG.Payments.Domain.Enums;
+using FCG.Payments.Domain.Interfaces;
 using FCG.Payments.Domain.Interfaces.Repositories;
 using FCG.Payments.Domain.Services;
 using FCG.Payments.Infrastructure.Persistence;
 using FCG.Payments.Infrastructure.Repositories;
 using FCG.Payments.Infrastructure.Services;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,13 +24,17 @@ public class PaymentTransactionServiceTest
         // Arrange
         await using var context = await ContextBuilder.GenerateContext();
 
-
+        var publisherMock = new Mock<IPaymentProcessedPublisher>();
         var repositoryPaymentTransactionStatus = new PaymentTransactionStatusRepository(context);
         var repositoryPaymentTransaction = new PaymentTransactionRepository(context);
         var selectorStatusService = new SelectorStatus(repositoryPaymentTransactionStatus);
         var domainService = new PaymentTransactionDomainService(repositoryPaymentTransaction, repositoryPaymentTransactionStatus, selectorStatusService);
         var unitOfWork = new UnitOfWork(context);
-        var service = new PaymentTransactionService(unitOfWork, domainService);
+        publisherMock
+            .Setup(x => x.PublishPaymentProcessed(new PaymentTransaction()))
+            .Returns(Task.CompletedTask);
+    
+    var service = new PaymentTransactionService(unitOfWork, domainService, publisherMock.Object);
         Random random = new Random();
         var transactionDTO = new TransactionCreate
         {
