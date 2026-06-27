@@ -198,3 +198,5 @@ bower_components/**
 
 dist
 **/dist
+appsettings.json
+appsettings.*.json

@@ -1,0 +1,75 @@
+
+
+networks:
+  fcgpayment-net:
+    driver: bridge
+
+services:
+  
+  postgres:
+    image: postgres:14.23-alpine3.24
+    ports:
+      - 5432:5432
+    volumes:
+      - dados-postgres:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    networks:
+      - fcgpayment-net
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "email@email.com"
+      PGADMIN_DEFAULT_PASSWORD: senha
+    restart: always
+    networks:
+      - fcgpayment-net
+
+  rabbitmq:
+    image: rabbitmq:4.3.2-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: always
+    networks:
+      - fcgpayment-net
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_logs:/var/log/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: senha
+      RABBITMQ_DEFAULT_VHOST: my_vhost
+
+  fcgpayment:
+    build:
+      context: .
+    restart: always
+    depends_on:
+      - postgres
+      - rabbitmq  
+      - pgadmin
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=fcgpayments-postgres-1;Port=5432;Database=postgres;Username=postgres;Password=mysecretpassword"
+      RabbitMQ__Host: fcgpayments-rabbitmq-1
+      RabbitMQ__VirtualHost: "my_vhost"
+      RabbitMQ__Username: user
+      RabbitMQ__Password: senha
+      RabbitMQ__KeyQueueOrderPlaced: "order-placed"
+      RabbitMQ__KeyPublisher: "payment.processed"
+    networks:
+      - fcgpayment-net
+
+
+
+
+volumes:
+  dados-postgres: {}
+  rabbitmq_data: {}
+  rabbitmq_logs: {}
