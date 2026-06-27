@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fcg-payments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fcg-payments
+  template:
+    metadata:
+      name: fcg-payments
+      labels:
+        app: fcg-payments
+    spec:
+      containers:
+      - name: fcgpayments-container
+        image: drungas/fcgpayments
+        envFrom:
+        - configMapRef:
+            name: fcg-payments-config
+        - secretRef:
+            name: fcg-payments-secret    

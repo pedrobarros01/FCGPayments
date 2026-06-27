@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fcg-payments-config
+data:
+  RabbitMQ__KeyQueueOrderPlaced: "order-placed"
+  RabbitMQ__KeyPublisher: "payment.processed"  

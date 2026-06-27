@@ -7,6 +7,8 @@ COPY ["src/FCG.Payments/FCG.Payments.csproj", "build/FCG.Payments/"]
 COPY ["src/FCG.Payments.Application/FCG.Payments.Application.csproj", "build/FCG.Payments.Application/"]
 COPY ["src/FCG.Payments.Domain/FCG.Payments.Domain.csproj", "build/FCG.Payments.Domain/"]
 COPY ["src/FCG.Payments.Infrastructure/FCG.Payments.Infrastructure.csproj", "build/FCG.Payments.Infrastructure/"]
+COPY ["src/FCG.Payments.Logger/FCG.Payments.Logger.csproj", "build/FCG.Payments.Logger/"]
+COPY ["src/FCG.Shared/FCG.Shared.csproj", "build/FCG.Shared/"]
 COPY . .
 RUN dotnet restore "build/FCG.Payments/FCG.Payments.csproj"
 WORKDIR "/build/src/FCG.Payments"

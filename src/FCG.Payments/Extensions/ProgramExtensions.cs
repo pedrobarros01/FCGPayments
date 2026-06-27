@@ -21,6 +21,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace FCG.Payments.Extensions
             services.AddSingleton<IProcessingQueue<TransactionCreate>, ProcessingQueue<TransactionCreate>>();
 
             services.AddScoped<IPaymentTransactionService, PaymentTransactionService>();
-            services.AddScoped<ISelectorStatus, SelectorStatus>();
+            services.AddScoped<ISelectorStatus, SelectorStatus>(); 
             return services;
         }
         public static IServiceCollection ConfigureInfrastructure(this IServiceCollection services, IConfiguration configuration)
@@ -107,6 +108,20 @@ namespace FCG.Payments.Extensions
             services.AddSingleton(Channel.CreateUnbounded<Log>());
             services.AddSingleton<ILoggerProvider, DatabaseLoggerProvider>();
             return services;
+        }
+        public static IServiceCollection ConfigureSettings(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<FCGSettings>(configuration);
+            return services;
+        }
+        public static IHost ApplyMigrations(this IHost app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.Migrate();
+            }
+            return app;
         }
     }
 }
