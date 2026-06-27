@@ -12,6 +12,9 @@
     <File Path="Dockerfile" />
   </Folder>
   <Folder Name="/k8s/">
+    <File Path="k8s/configmap.yml" />
+    <File Path="k8s/deployment.yml" />
+    <File Path="k8s/secrets.yml" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/CommonTestUtilities/CommonTestUtilities.csproj" />
