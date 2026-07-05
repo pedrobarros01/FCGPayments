@@ -19,13 +19,13 @@ namespace FCG.Payments.Tests.Mapper
         {
             //Arrange
             Random random = new Random();
-            var @event = new OrderPlacedEvent(Guid.NewGuid(), Guid.NewGuid(), (decimal)random.NextDouble());
+            var @event = new OrderPlacedEvent(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "teste", (decimal)random.NextDouble(), DateTime.UtcNow);
             TransactionCreate? mappedObject = MapperStatic.MapOrderPlacedEvent(@event);
 
             Assert.NotNull(mappedObject);
             Assert.Equal(@event.UserId, mappedObject.UserId);
             Assert.Equal(@event.GameId, mappedObject.GameId);
-            Assert.Equal(@event.Price, mappedObject.Price);
+            Assert.Equal(@event.Amount, mappedObject.Price);
         }
         [Fact]
         public async Task MapperStatic_Should_MapPaymentTransactionToPaymentProcessedApprovedEvent()
@@ -46,7 +46,7 @@ namespace FCG.Payments.Tests.Mapper
             Assert.NotNull(mappedObject);
             Assert.Equal(@event.UserId, mappedObject.UserId);
             Assert.Equal(@event.GameId, mappedObject.GameId);
-            Assert.Equal("APPROVED", mappedObject.StatusTransaction);
+            Assert.Equal(1, mappedObject.GameOrderStatus);
         }
         [Fact]
         public async Task MapperStatic_Should_MapPaymentTransactionToPaymentProcessedReprovedEvent()
@@ -67,7 +67,7 @@ namespace FCG.Payments.Tests.Mapper
             Assert.NotNull(mappedObject);
             Assert.Equal(@event.UserId, mappedObject.UserId);
             Assert.Equal(@event.GameId, mappedObject.GameId);
-            Assert.Equal("REPROVED", mappedObject.StatusTransaction);
+            Assert.Equal(2, mappedObject.GameOrderStatus);
         }
     }
 }

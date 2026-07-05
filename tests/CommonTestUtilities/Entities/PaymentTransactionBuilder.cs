@@ -23,8 +23,11 @@ public class PaymentTransactionBuilder
     {
         var paymentTransaction = new Faker<PaymentTransaction>("pt_BR")
             .RuleFor(p => p.Id, faker => faker.Random.Guid())
+            .RuleFor(p => p.OrderId, faker => faker.Random.Guid())
             .RuleFor(p => p.GameId, faker => faker.Random.Guid())
             .RuleFor(p => p.UserId, faker => faker.Random.Guid())
+            .RuleFor(p => p.GameName, faker => faker.Commerce.ProductName())
+            .RuleFor(p => p.CreatedOnOrder, faker => faker.Date.Recent())
             .RuleFor(p => p.DateTransaction, faker => faker.Date.Recent())
             .RuleFor(p => p.Price, faker => faker.Random.Decimal(10.50m, 500.75m));
         return paymentTransaction;
