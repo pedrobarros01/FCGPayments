@@ -7,9 +7,12 @@ namespace FCG.Payments.Domain.Entities
 {
     public class PaymentTransaction : BaseEntity
     {
+        public Guid OrderId { get; set; }
         public Guid UserId { get; set; }
         public Guid GameId { get; set; }
+        public string GameName { get; set; }
         public decimal Price { get; set; }
+        public DateTime CreatedOnOrder { get; set; }
         public DateTime DateTransaction { get; set; }
         public Guid StatusTransactionId { get; set; }
         public PaymentTransactionStatus StatusTransaction { get; set; }
