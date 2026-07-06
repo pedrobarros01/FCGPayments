@@ -14,16 +14,20 @@ public static class MapperStatic
     {
         return new TransactionCreate
         {
+            OrderId = @event.OrderId,
+            CreatedOnOrder = @event.CreatedOn,
+            GameName = @event.GameName,
             UserId = @event.UserId,
-            Price = @event.Price,
+            Price = @event.Amount,
             GameId = @event.GameId,
         };
     }
 
     public static PaymentProcessedEvent MapPaymentTransactionToPaymentProcessedEvent(PaymentTransaction paymentTransaction)
     {
-        string statusTransaction = paymentTransaction.StatusTransactionId == StatusOptions.Approved ? "APPROVED" : "REPROVED";
+        int statusTransaction = paymentTransaction.StatusTransactionId == StatusOptions.Approved ? 1 : 2;
         return new PaymentProcessedEvent(
+            paymentTransaction.OrderId,
             paymentTransaction.UserId,
             paymentTransaction.GameId,
             statusTransaction

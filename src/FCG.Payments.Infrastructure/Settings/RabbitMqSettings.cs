@@ -11,5 +11,5 @@ public class RabbitMqSettings
     public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public string KeyQueueOrderPlaced { get; set; } = string.Empty;
-    public string KeyPublisher { get; set; } = string.Empty;
+    public string KeyPublisher { get; set; } = "payment.processed";
 }
