@@ -24,9 +24,12 @@ public class PaymentTransactionService : BaseApplicationService, IPaymentTransac
     {
         PaymentTransaction paymentTransaction = new PaymentTransaction
         {
+            GameName = transaction.GameName,
+            OrderId = transaction.OrderId,
             GameId = transaction.GameId,
             Price = transaction.Price,
-            UserId = transaction.UserId
+            UserId = transaction.UserId,
+            CreatedOnOrder = transaction.CreatedOnOrder
         };
         var transactionInserted = await _paymentTransactionDomainService.CreatePaymentTransaction(paymentTransaction);
         await UnitOfWork.CommitAsync();

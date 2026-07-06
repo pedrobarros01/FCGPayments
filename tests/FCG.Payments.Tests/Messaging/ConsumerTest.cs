@@ -21,7 +21,10 @@ public class ConsumerTest
         var message = new OrderPlacedEvent(
             Guid.NewGuid(),
             Guid.NewGuid(),
-            (decimal)Random.Shared.NextDouble()
+            Guid.NewGuid(),
+            "teste",
+            (decimal)Random.Shared.NextDouble(),
+            DateTime.UtcNow
         );
         var contextConsumer = new Mock<ConsumeContext<OrderPlacedEvent>>();
         contextConsumer

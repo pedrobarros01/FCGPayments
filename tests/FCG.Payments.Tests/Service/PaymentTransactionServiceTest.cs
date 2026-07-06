@@ -38,9 +38,12 @@ public class PaymentTransactionServiceTest
         Random random = new Random();
         var transactionDTO = new TransactionCreate
         {
+            OrderId = Guid.NewGuid(),
+            GameName = "teste",
             GameId = Guid.NewGuid(),
             Price = (decimal)random.NextDouble(),
-            UserId = Guid.NewGuid()
+            UserId = Guid.NewGuid(),
+            CreatedOnOrder = DateTime.UtcNow
         };
 
         // Act

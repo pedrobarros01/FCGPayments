@@ -93,7 +93,7 @@ namespace FCG.Payments.Extensions
                             e.ConfigureConsumer<OrderPlacedConsumer>(context);
                         });
 
-                        cfg.Publish<PaymentProcessedEvent>(p => p.ExchangeType = "topic");
+                        cfg.Publish<PaymentProcessedEvent>(p => p.ExchangeType = "fanout");
                         cfg.ConfigureEndpoints(context);
 
                     });
