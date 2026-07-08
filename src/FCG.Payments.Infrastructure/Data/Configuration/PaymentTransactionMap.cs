@@ -1,4 +1,5 @@
 ﻿using FCG.Payments.Domain.Entities;
+using FCG.Payments.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -14,9 +15,12 @@ namespace FCG.Payments.Infrastructure.Data.Configuration
             builder.ToTable("PaymentTransaction");
             builder.HasKey(x => x.Id);
 
-            builder.HasOne(p => p.StatusTransaction)
-                .WithMany(ps => ps.Transactions)
-                .HasForeignKey(p => p.StatusTransactionId);
+            builder.Property(p => p.StatusTransaction)
+            .IsRequired()
+            .HasConversion(
+                status => status.ToString(),
+                value => Enum.Parse<PaymentTransactionStatus>(value))
+            .HasMaxLength(30);
         }
     }
 }

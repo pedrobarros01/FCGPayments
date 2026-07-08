@@ -2,7 +2,6 @@
 using CommonTestUtilities.Database;
 using CommonTestUtilities.Entities;
 using FCG.Payments.Domain.Entities;
-using FCG.Payments.Domain.Enums;
 using FCG.Payments.Infrastructure.Repositories;
 using FCG.Payments.Infrastructure.Services;
 using FCG.Payments.Tests.Fixture;
@@ -25,10 +24,9 @@ public class PaymentTransactionTest
     {
         var transaction = _transactionFixture.GenerateTransactionWithStatusEmpty();
         var context = await ContextBuilder.GenerateContext();
-        var paymentTransactionStatusRepository = new PaymentTransactionStatusRepository(context);
-        var selectorStatusService = new SelectorStatus(paymentTransactionStatusRepository);
-        var statusId = await selectorStatusService.GetRandomTransactionStatus();
-        List<Guid> statusIds = new List<Guid> { StatusOptions.Approved, StatusOptions.Reproved};
+        var selectorStatusService = new SelectorStatus();
+        var statusId = selectorStatusService.GetRandomTransactionStatus();
+        List<int> statusIds = new List<int> { 0, 1 };
         Assert.Contains(statusId, statusIds);
         
     }
@@ -37,8 +35,9 @@ public class PaymentTransactionTest
     public void PaymentTransaction_Should_CreateObject()
     {
         var transaction = _transactionFixture.GenerateTransactionEmpty();
-        var status = new PaymentTransactionStatus(Guid.NewGuid(), "teste", "teste");
-        transaction.Create(transaction, status);
+        var selectorStatusService = new SelectorStatus();
+        var statusId = selectorStatusService.GetRandomTransactionStatus();
+        transaction.Create(transaction, statusId);
         Assert.NotEqual(Guid.Empty, transaction.Id);
 
     }

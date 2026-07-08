@@ -13,7 +13,6 @@ public class ApplicationDbContext : DbContext
     {
         
     }
-    public DbSet<PaymentTransactionStatus> PaymentTransactionStatus { get; set; }
     public DbSet<PaymentTransaction> PaymentTransaction { get; set; }
     public DbSet<Log> Logs { get; set; }
 

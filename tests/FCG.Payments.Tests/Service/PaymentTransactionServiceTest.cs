@@ -2,7 +2,6 @@
 using FCG.Payments.Application.DTO;
 using FCG.Payments.Application.Services;
 using FCG.Payments.Domain.Entities;
-using FCG.Payments.Domain.Enums;
 using FCG.Payments.Domain.Interfaces;
 using FCG.Payments.Domain.Interfaces.Repositories;
 using FCG.Payments.Domain.Services;
@@ -19,16 +18,15 @@ namespace FCG.Payments.Tests.Service;
 public class PaymentTransactionServiceTest
 {
     [Fact]
-    public async Task PaymentTransactionService_Should_CreateTransactio()
+    public async Task PaymentTransactionService_Should_CreateTransaction()
     {
         // Arrange
         await using var context = await ContextBuilder.GenerateContext();
 
         var publisherMock = new Mock<IPaymentProcessedPublisher>();
-        var repositoryPaymentTransactionStatus = new PaymentTransactionStatusRepository(context);
         var repositoryPaymentTransaction = new PaymentTransactionRepository(context);
-        var selectorStatusService = new SelectorStatus(repositoryPaymentTransactionStatus);
-        var domainService = new PaymentTransactionDomainService(repositoryPaymentTransaction, repositoryPaymentTransactionStatus, selectorStatusService);
+        var selectorStatusService = new SelectorStatus();
+        var domainService = new PaymentTransactionDomainService(repositoryPaymentTransaction, selectorStatusService);
         var unitOfWork = new UnitOfWork(context);
         publisherMock
             .Setup(x => x.PublishPaymentProcessed(new PaymentTransaction()))
@@ -52,6 +50,5 @@ public class PaymentTransactionServiceTest
         // Assert
         Assert.NotNull(result);
         Assert.IsType<PaymentTransaction>(result);
-        Assert.True(result.StatusTransactionId != Guid.Empty);
     }
 }
