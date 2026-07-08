@@ -1,6 +1,5 @@
 ﻿using FCG.Payments.Application.DTO;
 using FCG.Payments.Domain.Entities;
-using FCG.Payments.Domain.Enums;
 using FCG.Shared.Events;
 using System;
 using System.Collections.Generic;
@@ -25,7 +24,7 @@ public static class MapperStatic
 
     public static PaymentProcessedEvent MapPaymentTransactionToPaymentProcessedEvent(PaymentTransaction paymentTransaction)
     {
-        int statusTransaction = paymentTransaction.StatusTransactionId == StatusOptions.Approved ? 1 : 2;
+        int statusTransaction = paymentTransaction.StatusTransaction == Domain.Enum.PaymentTransactionStatus.Approved ? 1 : 2;
         return new PaymentProcessedEvent(
             paymentTransaction.OrderId,
             paymentTransaction.UserId,

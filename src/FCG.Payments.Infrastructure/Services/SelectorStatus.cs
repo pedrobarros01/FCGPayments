@@ -9,18 +9,16 @@ namespace FCG.Payments.Infrastructure.Services;
 
 public class SelectorStatus : ISelectorStatus
 {
-    private readonly IPaymentTransactionStatusRepository _paymentStatusRepository;
 
-    public SelectorStatus(IPaymentTransactionStatusRepository paymentStatusRepository)
+    public SelectorStatus()
     {
-        _paymentStatusRepository = paymentStatusRepository;
     }
 
-    public async Task<Guid> GetRandomTransactionStatus()
+    public int GetRandomTransactionStatus()
     {
-        IList<PaymentTransactionStatus> paymentTransactionsStatus = await _paymentStatusRepository.GetAll();
+        
         Random random = new Random();
         int index = random.Next(0, 2);
-        return paymentTransactionsStatus[index].Id;
+        return index;
     }
 }

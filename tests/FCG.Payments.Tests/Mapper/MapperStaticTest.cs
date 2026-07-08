@@ -2,7 +2,6 @@
 using FCG.Payments.Application.DTO;
 using FCG.Payments.Application.Mapper;
 using FCG.Payments.Domain.Entities;
-using FCG.Payments.Domain.Enums;
 using FCG.Payments.Infrastructure.Repositories;
 using FCG.Shared.Events;
 using System;
@@ -38,7 +37,7 @@ namespace FCG.Payments.Tests.Mapper
                 GameId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Price = (decimal)random.NextDouble(),
-                StatusTransactionId = StatusOptions.Approved,
+                StatusTransaction = Domain.Enum.PaymentTransactionStatus.Approved,
                 UserId = Guid.NewGuid()
             };
             PaymentProcessedEvent mappedObject = MapperStatic.MapPaymentTransactionToPaymentProcessedEvent(@event);
@@ -59,7 +58,7 @@ namespace FCG.Payments.Tests.Mapper
                 GameId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Price = (decimal)random.NextDouble(),
-                StatusTransactionId = StatusOptions.Reproved,
+                StatusTransaction = Domain.Enum.PaymentTransactionStatus.Rejected,
                 UserId = Guid.NewGuid()
             };
             PaymentProcessedEvent mappedObject = MapperStatic.MapPaymentTransactionToPaymentProcessedEvent(@event);

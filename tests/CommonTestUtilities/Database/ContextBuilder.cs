@@ -16,18 +16,6 @@ public static class ContextBuilder
             .Options;
 
         var context = new ApplicationDbContext(options);
-        context.PaymentTransactionStatus.AddRange([
-            new PaymentTransactionStatus(
-            Guid.Parse("11111111-1111-1111-1111-111111111111"),
-            "Aprovado",
-            "Pagamento aprovado"
-            ),
-            new PaymentTransactionStatus(
-            Guid.Parse("22222222-2222-2222-2222-222222222222"),
-            "Reprovado",
-            "Pagamento reprovado"
-            )
-        ]);
         await context.SaveChangesAsync();
         context.ChangeTracker.Clear();
         return context;
