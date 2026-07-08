@@ -45,7 +45,7 @@ namespace FCG.Payments.Tests.Mapper
             Assert.NotNull(mappedObject);
             Assert.Equal(@event.UserId, mappedObject.UserId);
             Assert.Equal(@event.GameId, mappedObject.GameId);
-            Assert.Equal(1, mappedObject.GameOrderStatus);
+            Assert.Equal("Approved", mappedObject.Status);
         }
         [Fact]
         public async Task MapperStatic_Should_MapPaymentTransactionToPaymentProcessedReprovedEvent()
@@ -66,7 +66,7 @@ namespace FCG.Payments.Tests.Mapper
             Assert.NotNull(mappedObject);
             Assert.Equal(@event.UserId, mappedObject.UserId);
             Assert.Equal(@event.GameId, mappedObject.GameId);
-            Assert.Equal(2, mappedObject.GameOrderStatus);
+            Assert.Equal("Rejected", mappedObject.Status);
         }
     }
 }
