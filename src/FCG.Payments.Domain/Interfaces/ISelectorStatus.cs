@@ -6,5 +6,5 @@ namespace FCG.Payments.Domain.Interfaces;
 
 public interface ISelectorStatus
 {
-    Task<Guid> GetRandomTransactionStatus();
+    int GetRandomTransactionStatus();
 }

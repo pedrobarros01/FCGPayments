@@ -104,7 +104,6 @@ namespace FCG.Payments.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPaymentProcessedPublisher, PaymentProcessedPublisher>();
             services.AddScoped<IPaymentTransactionRepository, PaymentTransactionRepository>();
-            services.AddScoped<IPaymentTransactionStatusRepository, PaymentTransactionStatusRepository>();
             services.AddSingleton(Channel.CreateUnbounded<Log>());
             services.AddSingleton<ILoggerProvider, DatabaseLoggerProvider>();
             return services;
