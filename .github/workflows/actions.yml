@@ -53,9 +53,7 @@ jobs:
           REPOSITORY: ${{vars.AWS_REPOSITORY}}
           IMAGE_VERSION_TAG: ${{ github.ref_name }}
         run: |
-          GIT_TAG="$IMAGE_VERSION_TAG
-          
-          CLEAN_TAG=$(echo $GIT_TAG | sed 's/^v//')
+          CLEAN_TAG=$(echo $IMAGE_VERSION_TAG| sed 's/^v//')
           docker build -t $REGISTRY/$REPOSITORY:$CLEAN_TAG .
           docker push $REGISTRY/$REPOSITORY:$CLEAN_TAG
 
