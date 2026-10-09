@@ -59,6 +59,19 @@ jobs:
           CLEAN_TAG=$(echo $IMAGE_VERSION_TAG| sed 's/^v//')
           docker build -t $REGISTRY/$REPOSITORY:$CLEAN_TAG .
           docker push $REGISTRY/$REPOSITORY:$CLEAN_TAG
+          
+      - name: Testar Conexão AWS
+        run: |
+          aws sts get-caller-identity
+
+      - name: Conectar no cluster
+        run: |
+          aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
+
+      - name: Testar Conexão com o Cluster
+        run: |
+          kubectl get nodes
+          kubectl get pods -A
 
       - name: Publicando relatório de teste
         uses: dorny/test-reporter@v1
